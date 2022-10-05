@@ -1,0 +1,21 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+fastapi = "*"
+aiortc = "*"
+uvicorn = "*"
+gunicorn = "*"
+pydantic = {extras = ["dotenv"], version = "*"}
+jinja2 = "*"
+
+[dev-packages]
+black = "*"
+
+[requires]
+python_version = "3.10"
+
+[pipenv]
+allow_prereleases = true

@@ -1,0 +1,7 @@
+app/tests/
+test_modules/
+baseimage
+__pycache__
+.pytest_cache
+.mypy_cache
+live

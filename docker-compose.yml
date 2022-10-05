@@ -1,0 +1,32 @@
+version: "3"
+services:
+  restapi:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - $PWD/app:/usr/src/app/app
+      - $HOME/.aws/credentials:/root/.aws/credentials:ro
+      - $HOME/.aws/config:/root/.aws/config:ro
+    ports:
+      - 8080:8080
+    command:
+      [
+        "pipenv",
+        "run",
+        "uvicorn",
+        "app.main:app",
+        "--host",
+        "0.0.0.0",
+        "--port",
+        "8080",
+        "--reload",
+        "--log-level",
+        "debug",
+      ]
+    environment:
+      - APP_CONFIG_FILE=local
+      - TZ=Asia/Tokyo
+      - LC_CTYPE=C.UTF-8
+      - PYTHONDONTWRITEBYTECODE=1
+      - PYTHONUNBUFFERED=1
