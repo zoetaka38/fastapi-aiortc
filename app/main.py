@@ -31,6 +31,7 @@ root_logger.addHandler(logging.StreamHandler())
 root_logger.setLevel(settings.LOG_LEVEL)
 
 pcs = set()
+dcs = set()
 relay = MediaRelay()
 
 
@@ -85,10 +86,12 @@ async def offer(request: Request):
             pc.addTrack(AudioTransformTrack(relay.subscribe(track)))
             # recorder.addTrack(track)
             # recorder.addTrack(player.audio)
+            pass
         elif track.kind == "video":
             # pc.addTrack(relay.subscribe(track))
             pc.addTrack(VideoTransformTrack(relay.subscribe(track), transform=""))
             # recorder.addTrack(relay.subscribe(track))
+            pass
 
         @track.on("ended")
         async def on_ended():
@@ -106,6 +109,12 @@ async def offer(request: Request):
     return JSONResponse(
         {"sdp": pc.localDescription.sdp, "type": pc.localDescription.type},
     )
+
+
+@app.post("/message", include_in_schema=False)
+async def message(request: Request):
+    params = await request.json()
+    [dc.send(params["message"]) for dc in dcs]
 
 
 @app.on_event("shutdown")
