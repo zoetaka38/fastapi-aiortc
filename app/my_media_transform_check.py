@@ -14,9 +14,9 @@ class AudioTransformTrack(MediaStreamTrack):
         self.track = track
 
     async def recv(self):
-        # print(self.track)
+        print(self.track)
         frame = await self.track.recv()
-        # print(frame)
+        print(frame)
         return frame
 
 

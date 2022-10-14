@@ -66,6 +66,8 @@ async def offer(request: Request):
 
     @pc.on("datachannel")
     def on_datachannel(channel):
+        dcs.add(channel)
+
         @channel.on("message")
         def on_message(message):
             if isinstance(message, str) and message.startswith("ping"):
